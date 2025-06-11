@@ -3,22 +3,19 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
 
 ## Update!
 **25.06.11:** Our repository was created!
+
 ## Overview
 
 ![STaRNet Architecture](figure/architecture.png)
 
 **STaRNet** is a deep learning model that combines multi-scale feature extraction and Riemannian geometric features for high-performance motor imagery decoding. The model captures multi-scale temporal patterns from EEG signals and projects them onto the Riemannian manifold through covariance matrices. These features are then mapped to the tangent space and effectively fused for classification. The architecture demonstrates superior performance in decoding motor imagery tasks, particularly in the **BCI Competition IV 2a** dataset.
 
-## Dataset Download
+## Prerequisites
 
-* We downloaded the dataset from the [link](https://www.bbci.de/competition/iv/download/index.html?agree=yes&submit=Submit).
-* **Currently, we are providing the converted dataset.**
-
-(Optional) To convert the downloaded dataset, use the following command:
-```bash
-cd convert_dataset
-python transform.py
-```
+* **Ubuntu 22.04 (WSL2 possible)**
+* Docker
+* **CUDA 11.6.2**
+* Python 3.10.8
 
 ## Installation
 
@@ -47,6 +44,17 @@ python transform.py
     ```bash
     pip install -r requirements.txt
     ```
+
+## Dataset Download
+
+* We downloaded the dataset from the [link](https://www.bbci.de/competition/iv/download/index.html?agree=yes&submit=Submit).
+* **Currently, we are providing the converted dataset.**
+
+(Optional) To convert the downloaded dataset, use the following command:
+```bash
+cd convert_dataset
+python transform.py
+```
 
 ## Train
 
