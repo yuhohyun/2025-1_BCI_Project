@@ -20,15 +20,6 @@ cd convert_dataset
 python transform.py
 ```
 
-
-## Prerequisites
-
-* Ubuntu 22.04 (WSL2 possible)
-* Docker
-* CUDA 11.6.2
-* Python 3.10.8
-
-
 ## Installation
 
 1.  **Clone Repository**
@@ -56,6 +47,20 @@ python transform.py
     ```bash
     pip install -r requirements.txt
     ```
+
+## Train
+
+To train the model, run the following command:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py
+```
+
+You can specify the GPU number by changing the number after `CUDA_VISIBLE_DEVICES=`. For example, to use GPU 7, run:
+```bash
+CUDA_VISIBLE_DEVICES=7 python main.py
+```
+
+**You can modify the hyperparameters in `config/params.py` before training. The training results will be saved in the path specified by the `--save_root` argument in `main.py`**.
 
 ## Evaluation
 * We conducted our experiments in an NVIDIA RTX A6000.
