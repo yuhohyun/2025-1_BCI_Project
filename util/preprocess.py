@@ -6,9 +6,6 @@ import numpy as np
 
 
 class BCI_IV_2a(Dataset):
-    '''
-    A class need to input the Dataloader in the pytorch.
-    '''
     def __init__(self, features, labels, domain=None, domain_label=False):
         super(BCI_IV_2a, self).__init__()
         self.domain_label = domain_label
@@ -26,13 +23,6 @@ class BCI_IV_2a(Dataset):
             return self.features[index], self.labels[index]
 
 def get_test_EEG_data(sub,data_path):
-    '''
-    Return one subject's test dataset.
-    Arg:
-        sub:Subject number.
-        data_path:The data path of all subjects.
-    @author:WenChao Liu 
-    '''
     test_path = os.path.join(data_path,r'sub{}_test/Data.mat'.format(sub))
     test_data = sio.loadmat(test_path)
     test_x = test_data['x_data']
@@ -42,18 +32,7 @@ def get_test_EEG_data(sub,data_path):
     return test_dataset
 
 
-# need!
 def get_HO_EEG_data(subject_id, data_path, validation_size=0.2, data_seed=20210902):
-    
-    '''
-    Return one subject's training dataset,split training dataset and split validation dataset.
-    Arg:
-        subject_id:Subject number.
-        data_path:The data path of all subjects.
-        validation_size:The percentage of validation data in the data to be divided. 
-        data_seed:The random seed for shuffle the data.
-    @author:WenChao Liu
-    '''
     train_path = os.path.join(data_path, f'sub{subject_id}_train/Data.mat')
    
     train_data = sio.loadmat(train_path)
@@ -77,10 +56,6 @@ def get_HO_EEG_data(subject_id, data_path, validation_size=0.2, data_seed=202109
     return train_dataset, split_train_dataset, split_validation_dataset, test_dataset
 
 def train_validation_split(features, labels, validation_size, seed=None):
-    '''
-    Split the training set into a new training set and a validation set
-    @author: WenChao Liu
-    '''
     if seed:
         np.random.seed(seed)
     unique_labels = np.unique(labels)

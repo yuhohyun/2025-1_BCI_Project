@@ -15,7 +15,7 @@ parser.add_argument('--model', type=str, default='STaRNet')
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--learning_rate', type=float, default=0.001)
 parser.add_argument('--num_epochs', type=int, default=500)
-parser.add_argument('--save_root', type=str, default='./results/20250610_v8')
+parser.add_argument('--save_root', type=str, default='./results')
 args = parser.parse_args()
 
 # ========== [2] 환경 설정 ==========
