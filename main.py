@@ -8,6 +8,8 @@ from datetime import datetime
 from STaRNet.model import STaRNet
 from util import preprocess
 from config.params import PARAMS
+from sklearn.metrics import cohen_kappa_score
+import numpy as np
 
 # ========== [1] 파라미터 파싱 ==========
 parser = argparse.ArgumentParser(description='Train EEG model using true HOCV')
@@ -15,7 +17,7 @@ parser.add_argument('--model', type=str, default='STaRNet')
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--learning_rate', type=float, default=0.001)
 parser.add_argument('--num_epochs', type=int, default=500)
-parser.add_argument('--save_root', type=str, default='./results')
+parser.add_argument('--save_root', type=str, default='./results/20250611_v1')
 args = parser.parse_args()
 
 # ========== [2] 환경 설정 ==========
@@ -29,13 +31,7 @@ os.makedirs(save_dir, exist_ok=True)
 
 # ========== [3] Hold-Out CV 방식으로 Subject별 학습/테스트 ==========
 def train_subject_holdout(subject_id: int):
-    """
-    논문 §5.1: BCI Competition IV 2a 데이터에 대해 HOCV 사용:
-      • Session1(288 trials) → Train
-      • Session2(288 trials) → Test
-      • 총 epochs=500, lr=0.001, batch_size=16
-      • k-Fold나 EarlyStopping 없이, 학습 후 마지막 모델로 테스트
-    """
+
     print(f"\n[INFO] Subject {subject_id} hold-out training start")
 
     data_dir = os.path.join('./dataset/BCICIV_2a')
@@ -110,6 +106,9 @@ def train_subject_holdout(subject_id: int):
 
     total_samples = 0
     correct_predictions = 0
+    all_predictions = []
+    all_targets = []
+    
     with torch.no_grad():
         for inputs, targets in test_loader:
             inputs = inputs.to(device)
@@ -118,9 +117,14 @@ def train_subject_holdout(subject_id: int):
             predictions = outputs.argmax(dim=1)
             correct_predictions += (predictions == targets).sum().item()
             total_samples += targets.size(0)
+            
+            all_predictions.extend(predictions.cpu().numpy())
+            all_targets.extend(targets.cpu().numpy())
 
     accuracy = correct_predictions / total_samples
+    kappa = cohen_kappa_score(all_targets, all_predictions)
     print(f"[RESULT] Subject {subject_id} Test Accuracy: {accuracy*100:.2f}%")
+    print(f"[RESULT] Subject {subject_id} Kappa Score: {kappa:.4f}")
 
     # -------------------------------------------------
     # 6) Test 결과 파일 저장
@@ -128,23 +132,32 @@ def train_subject_holdout(subject_id: int):
     result_file = os.path.join(save_dir, f'test_result_sub{subject_id}.txt')
     with open(result_file, 'w') as f:
         f.write(f"Subject {subject_id} Test Accuracy: {accuracy:.4f}\n")
+        f.write(f"Subject {subject_id} Kappa Score: {kappa:.4f}\n")
     print(f"[✓] Subject {subject_id} test results saved → {result_file}\n")
 
-    return accuracy
+    return accuracy, kappa
 
 # ========== [4] 메인: Subject 1~9 순차적으로 학습/테스트 ==========
 if __name__ == '__main__':
     all_accuracies = []
+    all_kappas = []
     for subject_id in range(1, 10):  # Subjects 1~9
-        accuracy = train_subject_holdout(subject_id)
+        accuracy, kappa = train_subject_holdout(subject_id)
         all_accuracies.append(accuracy)
+        all_kappas.append(kappa)
 
     avg_accuracy = sum(all_accuracies) / len(all_accuracies)
+    avg_kappa = sum(all_kappas) / len(all_kappas)
     print(f"\n[FINAL] All Subjects Test Accuracies: {all_accuracies}")
     print(f"[FINAL] Average Accuracy: {avg_accuracy*100:.2f}%")
+    print(f"[FINAL] All Subjects Kappa Scores: {all_kappas}")
+    print(f"[FINAL] Average Kappa Score: {avg_kappa:.4f}")
 
     summary_path = os.path.join(save_dir, 'summary_all_subjects.txt')
     with open(summary_path, 'w') as f:
-        f.write(f"All Accuracies: {all_accuracies}\nAverage Accuracy: {avg_accuracy:.4f}\n")
+        f.write(f"All Accuracies: {all_accuracies}\n")
+        f.write(f"Average Accuracy: {avg_accuracy:.4f}\n")
+        f.write(f"All Kappa Scores: {all_kappas}\n")
+        f.write(f"Average Kappa Score: {avg_kappa:.4f}\n")
     print(f"[✓] Summary saved → {summary_path}")
 
