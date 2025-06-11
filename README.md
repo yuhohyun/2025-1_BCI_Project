@@ -45,7 +45,7 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
     pip install -r requirements.txt
     ```
 
-## Dataset Download
+## Data Preparation
 
 * We downloaded the dataset from the [link](https://www.bbci.de/competition/iv/download/index.html?agree=yes&submit=Submit).
 * **Currently, we are providing the converted dataset.**
