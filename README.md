@@ -7,7 +7,7 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
 
 ![STaRNet Architecture](figure/architecture.png)
 
-STaRNet is a deep learning model that combines multi-scale feature extraction and Riemannian geometric features for high-performance motor imagery decoding. The model captures multi-scale temporal patterns from EEG signals and projects them onto the Riemannian manifold through covariance matrices. These features are then mapped to the tangent space and effectively fused for classification. The architecture demonstrates superior performance in decoding motor imagery tasks, particularly in the BCI Competition IV 2a dataset.
+**STaRNet** is a deep learning model that combines multi-scale feature extraction and Riemannian geometric features for high-performance motor imagery decoding. The model captures multi-scale temporal patterns from EEG signals and projects them onto the Riemannian manifold through covariance matrices. These features are then mapped to the tangent space and effectively fused for classification. The architecture demonstrates superior performance in decoding motor imagery tasks, particularly in the **BCI Competition IV 2a** dataset.
 
 ## Dataset Download
 
@@ -77,5 +77,5 @@ This repository is released under the MIT license as found in the [LICENSE](http
 
 ## Acknowledgement
 
-* I would like to express my deepest gratitude to **Professor Kim Byung Hyung**, who guided this project, and **Teaching Assistant Li Hanyu**, who provided meticulous assistance!
-* Special thanks to the authors of the original paper: Xingfu Wang, Wenjie Yang, Wenxia Qi, Yu Wang, Xiaojun Ma, and Wei Wang, for their groundbreaking work on STaRNet.
+* I would like to express my deepest gratitude to **Professor Byung Hyung Kim**, who guided this project, and **Teaching Assistant Li Hanyu**, who provided meticulous assistance!
+* Special thanks to the authors of the original paper: **Xingfu Wang, Wenjie Yang, Wenxia Qi, Yu Wang, Xiaojun Ma, and Wei Wang**, for their groundbreaking work on **STaRNet**.
