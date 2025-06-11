@@ -20,8 +20,8 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
 
 1.  **Clone Repository**
     ```bash
-    git clone https://github.com/ddongpal/2025-1-bci-project.git
-    cd 2025-1-bci-project
+    git clone https://github.com/yuhohyun/2025-1_BCI_Project.git
+    cd 2025-1_BCI_Project
     ```
 
 2.  **Pull Docker Image**
@@ -48,3 +48,4 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
 ## License
 This repository is released under the MIT license as found in the [LICENSE](https://github.com/ddongpal/2025-1-bci-project/blob/main/LICENSE) file.   
 ## Acknowledgement
+
