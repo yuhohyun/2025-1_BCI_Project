@@ -49,12 +49,8 @@ This repository is an **unofficial PyTorch implementation** of the paper "**STaR
 
 * We downloaded the dataset from the [link](https://www.bbci.de/competition/iv/download/index.html?agree=yes&submit=Submit).
 * **Currently, we are providing the converted dataset.**
-
-(Optional) To convert the downloaded dataset, use the following command:
-```bash
-cd convert_dataset
-python transform.py
-```
+  
+  → **So you don't need to download the dataset as we are providing the converted version.**
 
 ## Train
 
